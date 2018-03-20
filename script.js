@@ -32,9 +32,9 @@ function update(){
             dy = Math.sin(v.a)* (v.w1)/2;
             v.x += dx;
             v.y += dy;
-            v.a += v.ai / (v.w1) /2;
+            v.a += v.ai / (v.w1) /4;
             v.p.splice(0, v.p.length - v.l);
-            v.p.splice(0, v.p.length - 60 * 5);
+            v.p.splice(0, v.p.length - 20 * 5);
             v.p.push({x:v.x, y:v.y, dx:dx, dy:dy});
             if (frame % 30 == 0) {
                 v.ai = Math.random()-.5;
@@ -47,19 +47,23 @@ function update(){
     }
     
 //render visuals
-    canvas.height = 1080;
+    canvas.height = 512;
     canvas.width = 0 | canvas.height * innerWidth/innerHeight;
 
     let h = canvas.height
     let w = canvas.width
     // 
     // c.translate(w/2,h/2);
-    c.shadowBlur = 45;
+    c.shadowBlur = 85;
     c.translate(w/2,h/2);
     vines.forEach(v => {
         // c.strokeStyle ='white';
-        c.shadowColor =
-        c.strokeStyle ='hsl('+(v.a*60|0) + ',100%, '+ (60 + v.w1*5)+ '%)';
+        c.shadowColor = 'hsl('+(v.a*60|0) + ',100%, '+ (60 + v.w1*5)+ '%)';
+        c.font="100px Futura";
+        c.strokeText("yo",v.x,v.y);
+        // c.fillRect(v.x,v.y,v.x/2,v.y/2);
+        c.strokeStyle ='hsl('+(v.a*60|0) + ',100%, '+ (60 + v.w1*5)+ '%)'
+        c.fillStyle ='hsl('+(v.a*60|0) + ',100%, '+ (60 + v.w1*5)+ '%)';
         if(v.w1 == 8) {
             c.translate(-v.x, -v.y);
         }
@@ -67,8 +71,8 @@ function update(){
         c.beginPath();
         l = v.p.length -1;
         for(i=l;p=v.p[i];i--){
-           c.lineTo(p.x,p.y);
-           c.lineTo(p.x,p.y);
+        //    c.lineTo(p.x,p.y);
+        // c.fillRect(p.x,p.y,10,10);
        }
        c.stroke();
     });
