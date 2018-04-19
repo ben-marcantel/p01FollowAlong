@@ -1,7 +1,6 @@
 const canvas = document.getElementById("canvas");
 const c =canvas.getContext('2d');
-let max = 96*60;
-// let vines = [{}];
+let max = 96*40;
 
 //run on load
 function update(){
@@ -37,9 +36,9 @@ function update(){
             v.p.splice(0, v.p.length - 20 * 5);
             v.p.push({x:v.x, y:v.y, dx:dx, dy:dy});
             if (frame % 30 == 0) {
-                v.ai = Math.random()-.5;
+                v.ai = Math.random()-.7;
             }
-            if (v.w1 > 1 && Math.random () < v.l /16384/2){
+            if (v.w1 > 2 && Math.random () < v.l /16384/2){
                 vines.push({x:v.x, y:v.y, a:v.a, ai:v.ai, w1:v.w1/2, p:[], l:Math.min(v.l, 0 | v.w1 * 32 * (1+Math.random()))});
             }
         })
@@ -53,14 +52,13 @@ function update(){
     let h = canvas.height
     let w = canvas.width
     // 
-    // c.translate(w/2,h/2);
     c.shadowBlur = 85;
     c.translate(w/2,h/2);
     vines.forEach(v => {
         // c.strokeStyle ='white';
         c.shadowColor = 'hsl('+(v.a*60|0) + ',100%, '+ (60 + v.w1*5)+ '%)';
         c.font="100px Futura";
-        c.strokeText("yo",v.x,v.y);
+        // c.strokeText("yo",v.x,v.y);
         // c.fillRect(v.x,v.y,v.x/2,v.y/2);
         c.strokeStyle ='hsl('+(v.a*60|0) + ',100%, '+ (60 + v.w1*5)+ '%)'
         c.fillStyle ='hsl('+(v.a*60|0) + ',100%, '+ (60 + v.w1*5)+ '%)';
@@ -71,7 +69,7 @@ function update(){
         c.beginPath();
         l = v.p.length -1;
         for(i=l;p=v.p[i];i--){
-        //    c.lineTo(p.x,p.y);
+           c.lineTo(p.x,p.y);
         // c.fillRect(p.x,p.y,10,10);
        }
        c.stroke();
